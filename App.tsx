@@ -14,6 +14,7 @@ import Setting from "./Setting";
 import SettingDark from "./SettingDark";
 import Planned from "./Planned";
 import Page2 from "./page2";
+import plantrip2 from "./plantrip2";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,7 @@ export default function App() {
         <Stack.Screen name="Setting" component={Setting} />
         <Stack.Screen name="SettingDark" component={SettingDark} />
         <Stack.Screen name="Planned" component={Planned} />
+        <Stack.Screen name = "plantrip2" component={plantrip2}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

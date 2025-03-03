@@ -56,23 +56,23 @@ export default function page2() {
     </MapView>
 
     <View style={{ position: 'absolute', top:70, left: 20, right: 20, backgroundColor: '#313F7E', padding: 16, borderRadius: 20, shadowColor: '#000', shadowOpacity: 0.2, shadowRadius: 5 }}>
-    <TouchableOpacity 
-      style={{ 
-        position: 'absolute', 
-        top: 20, 
-        left: 20, 
-        width: 30, 
-        height: 30, 
-        borderWidth: 1.5, 
-        borderColor: 'white', 
-        borderRadius: 20, 
-        alignItems: 'center', 
-        justifyContent: 'center' 
-      }} 
-      onPress={() => navigation.navigate("Home")} // Use goBack instead of navigate
-    >
-      <Text style={{ fontSize: 16, color: 'white' }}>←</Text>
-    </TouchableOpacity>
+      <TouchableOpacity 
+        style={{ 
+          position: 'absolute', 
+          top: 20, 
+          left: 20, 
+          width: 25, 
+          height: 25, 
+          borderWidth: 1.5, 
+          borderColor: 'white', 
+          borderRadius: 20, 
+          alignItems: 'center', 
+          justifyContent: 'center' 
+        }} 
+        onPress={() => navigation.navigate("Home")} // Use goBack instead of navigate
+      >
+        <Text style={{ fontSize: 16, color: 'white' }}>←</Text>
+      </TouchableOpacity>
 
 
         <Text style={{ left: -20,fontSize: 20, fontWeight: 'bold', color: 'white', textAlign: 'center', marginBottom:10 }}

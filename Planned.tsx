@@ -100,7 +100,8 @@ export default function fin() {
           </View>
         </View>
 
-        <TouchableOpacity style={{ width: 150,backgroundColor: '#00FFCC', padding: 12, borderRadius: 8, alignItems: 'center', alignSelf:'center' }}>
+        <TouchableOpacity style={{ width: 150,backgroundColor: '#00FFCC', padding: 12, borderRadius: 8, alignItems: 'center', alignSelf:'center' }}
+        onPress={() => navigation.navigate("plantrip2")}>
           <Text style={{ fontSize: 15,color: '#171931', fontWeight: 'bold', }}>Search</Text>
         </TouchableOpacity>
       </View>
