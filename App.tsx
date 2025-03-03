@@ -6,6 +6,9 @@ import { useFonts, LexendDeca_400Regular } from "@expo-google-fonts/lexend-deca"
 
 import LogIn from "./LogIn";
 import signup from "./signup"
+
+import otp2 from "./otp2"
+import selectcar from "./selectcar";
 import HomeScreen from "./HomeScreen";
 import Setting from "./Setting";
 import SettingDark from "./SettingDark";
@@ -36,6 +39,9 @@ export default function App() {
         
         <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="signup" component={signup} />
+        
+        <Stack.Screen name="otp2" component={otp2} />
+        <Stack.Screen name = "selectcar" component={selectcar}/>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Page2" component={Page2} />
         <Stack.Screen name="Setting" component={Setting} />

@@ -57,9 +57,16 @@ export default function fin() {
 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', paddingHorizontal: 20, paddingTop: 80 }}>
       <View style={{ width: '100%', maxWidth: 400, padding: 16, backgroundColor: '#313F7E', borderRadius: 30, shadowColor: '#000', shadowOpacity: 0.3, shadowRadius: 5 }}>
-        <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'white', marginBottom: 10 }}>
-          <Image source={require('./assets/icons/Pin.png')} style={{ width: 22, height: 22, tintColor: 'white'}} /> Plan trip
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        <Image 
+          source={require('./assets/icons/Pin.png')} 
+          style={{ width: 22, height: 22, tintColor: 'white', marginRight: 8 }} 
+        />
+        <Text style={{ marginBottom:-8,fontSize: 15, fontWeight: 'bold', color: 'white' }}>
+          Plan trip
         </Text>
+      </View>
+
 
         <View style={{ flexDirection: 'column', gap: 10, marginBottom: 15 }}>
           <View style={{ left:3,width: 350,flexDirection: 'row', alignItems: 'center', backgroundColor: 'white', borderRadius: 8, paddingHorizontal: 10 }}>

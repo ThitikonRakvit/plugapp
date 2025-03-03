@@ -72,10 +72,9 @@ export default function HomeScreen() {
             <SelectList
               setSelected={() => {}}
               data={[
-                { key: "1", value: "Tesla Model 3" },
-                { key: "2", value: "Tesla Model Y" },
-                { key: "3", value: "BYD Atto3" },
-                { key: "4", value: "Ora Goodcat" },
+                { key: "1", value: "Car 1" },
+                { key: "2", value: "Car 2" },
+                
               ]}
               boxStyles={{ backgroundColor: "white", width: '95%', borderRadius: 8,padding: 4 }}
               dropdownStyles={{ backgroundColor: "white", width: '95%'}}

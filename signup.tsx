@@ -7,7 +7,8 @@ const signUp: React.FC = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start',paddingTop: 90, backgroundColor: '#F1F2EC', paddingHorizontal: 20 }}>
-      <TouchableOpacity style={{ position: 'absolute', top: 90, left: 30, width: 25, height: 25, borderWidth: 1.5, borderColor: '#313F7E', borderRadius: 20, alignItems: 'center', justifyContent: 'center' }}onPress={() => navigation.navigate("LogIn")}>
+      <TouchableOpacity style={{ position: 'absolute', top: 90, left: 30, width: 25, height: 25, borderWidth: 1.5, borderColor: '#313F7E', borderRadius: 20, alignItems: 'center', justifyContent: 'center' }}
+      onPress={() => navigation.navigate("LogIn")}>
         <Text style={{ fontSize: 18, color: '#313F7E' }}>←</Text>
       </TouchableOpacity>
       <View style={{ width: '100%', maxWidth: 400, padding: 16, backgroundColor: '#F1F2EC',marginTop:55}}>
@@ -37,6 +38,7 @@ const signUp: React.FC = () => {
           />
           <TouchableOpacity
             style={{ width: '35%', padding: 12, backgroundColor: '#313F7E', borderRadius: 10, alignItems: 'center', alignSelf: 'flex-end', shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 6, elevation: 4 }}
+            onPress={() => navigation.navigate("otp2")}
           >
             <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Sign Up</Text>
           </TouchableOpacity>

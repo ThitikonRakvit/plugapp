@@ -99,46 +99,46 @@ export default function Setting() {
       </View>
       <View style={styles.bottomNav}>
         {/* Find EV Station Button */}
-        <TouchableOpacity
-          style={[styles.navItem, { opacity: route.name === "Home" ? 1 : 0.5 }]} // ใช้ opacity กับ TouchableOpacity
-          onPress={() => navigation.navigate("Home")}
-        >
-          <Image
-            source={require("./assets/icons/Marker.png")}
-            style={[styles.icon, { tintColor: "white" }]} // ไอคอนเป็นสีขาวเสมอ
-          />
-          <Text style={[styles.navText, { color: "white" }]}>
-            Find EV station
-          </Text>
-        </TouchableOpacity>
-      
-        {/* Plan Trip Button */}
-        <TouchableOpacity
-          style={[styles.navItem, { opacity: route.name === "Planned" ? 1 : 0.5 }]}
-          onPress={() => navigation.navigate("Planned")}
-        >
-          <Image
-            source={require("./assets/icons/Planned.png")}
-            style={[styles.icon, { tintColor: "white" }]}
-          />
-          <Text style={[styles.navText, { color: "white" }]}>
-            Plan trip
-          </Text>
-        </TouchableOpacity>
-      
-        {/* Settings Button */}
-        <TouchableOpacity
-          style={[styles.navItem, { opacity: route.name === "Setting" ? 1 : 0.5 }]}
-          onPress={() => navigation.navigate("Setting")}
-        >
-          <Image
-            source={require("./assets/icons/Settings.png")}
-            style={[styles.icon, { tintColor: "white" }]}
-          />
-          <Text style={[styles.navText, { color: "white" }]}>
-            Settings
-          </Text>
-        </TouchableOpacity>
+  <TouchableOpacity
+    style={[styles.navItem, { opacity: route.name === "Home" ? 1 : 0.5 }]} // ใช้ opacity กับ TouchableOpacity
+    onPress={() => navigation.navigate("Home")}
+  >
+    <Image
+      source={require("./assets/icons/Marker.png")}
+      style={[styles.icon, { tintColor: "white" }]} // ไอคอนเป็นสีขาวเสมอ
+    />
+    <Text style={[styles.navText, { color: "white" }]}>
+      Find EV station
+    </Text>
+  </TouchableOpacity>
+
+      {/* Plan Trip Button */}
+      <TouchableOpacity
+        style={[styles.navItem, { opacity: route.name === "Planned" ? 1 : 0.5 }]}
+        onPress={() => navigation.navigate("Planned")}
+      >
+        <Image
+          source={require("./assets/icons/Planned.png")}
+          style={[styles.icon, { tintColor: "white" }]}
+        />
+        <Text style={[styles.navText, { color: "white" }]}>
+          Plan trip
+        </Text>
+      </TouchableOpacity>
+
+      {/* Settings Button */}
+      <TouchableOpacity
+        style={[styles.navItem, { opacity: route.name === "Setting" ? 1 : 0.5 }]}
+        onPress={() => navigation.navigate("Setting")}
+      >
+        <Image
+          source={require("./assets/icons/Settings.png")}
+          style={[styles.icon, { tintColor: "white" }]}
+        />
+        <Text style={[styles.navText, { color: "white" }]}>
+          Settings
+        </Text>
+      </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
