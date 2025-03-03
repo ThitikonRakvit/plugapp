@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Text, View, ActivityIndicator } from "react-native";
 import { useFonts, LexendDeca_400Regular } from "@expo-google-fonts/lexend-deca";
 
+import LogIn from "./LogIn";
+import signup from "./signup"
 import HomeScreen from "./HomeScreen";
 import Setting from "./Setting";
 import SettingDark from "./SettingDark";
@@ -30,7 +32,10 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        
+        <Stack.Screen name="LogIn" component={LogIn} />
+        <Stack.Screen name="signup" component={signup} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Page2" component={Page2} />
         <Stack.Screen name="Setting" component={Setting} />
