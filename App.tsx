@@ -9,6 +9,7 @@ import signup from "./signup"
 
 import otp2 from "./otp2"
 import selectcar from "./selectcar";
+import selectcar2 from "./selectcar2";
 import HomeScreen from "./HomeScreen";
 import Setting from "./Setting";
 import SettingDark from "./SettingDark";
@@ -18,6 +19,7 @@ import plantrip2 from "./plantrip2";
 import EditProfile from "./EditProfile";
 import RoutesHis from "./RoutesHis";
 import RouteDetails from "./RouteDetails";
+import EditCar from "./EditCar";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,10 +48,12 @@ export default function App() {
         
         <Stack.Screen name="otp2" component={otp2} />
         <Stack.Screen name = "selectcar" component={selectcar}/>
+        <Stack.Screen name = "selectcar2" component={selectcar2}/>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Page2" component={Page2} />
         <Stack.Screen name="Setting" component={Setting} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="EditCar" component={EditCar} />
         <Stack.Screen name="SettingDark" component={SettingDark} />
         <Stack.Screen name="RoutesHis" component={RoutesHis} />
         <Stack.Screen name="RouteDetails" component={RouteDetails} />

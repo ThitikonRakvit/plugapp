@@ -47,14 +47,14 @@ export default function Setting() {
 
         {/* Menu Items */}
         <View style={{ marginTop: 20 }}>
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity style={styles.menuItem}
+          onPress={() => navigation.navigate("EditCar")}>
             <Text style={styles.menuText}>My Car</Text>
             <Image source={require("./assets/icons/chevron-right.png")} style={styles.chevronIcon} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.menuItem} 
-          onPress={() => navigation.navigate("RoutesHis")} // ✅ เพิ่ม Navigation ไปยัง RoutesHis.tsx
-          >
+          onPress={() => navigation.navigate("RoutesHis")}>
             <Text style={styles.menuText}>Routes History</Text>
             <Image source={require("./assets/icons/chevron-right.png")} style={styles.chevronIcon} />
           </TouchableOpacity>

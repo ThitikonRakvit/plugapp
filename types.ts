@@ -8,4 +8,6 @@ export type RootStackParamList = {
   RoutesHis: undefined;
   RouteDetails: undefined;
   EditCar: undefined;
+  selectcar: undefined;
+  selectcar2: undefined;
 };
