@@ -36,7 +36,7 @@ export default function Setting() {
           <Image source={require("./assets/icons/profile-image.png")} style={styles.profileImage} />
           <View style={{ marginLeft: 15 }}>
             <Text style={styles.profileEmail}>plugnplan@gmail.com</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
               <Text style={styles.editProfile}>
                 Edit Profile{" "}
                 <Image source={require("./assets/icons/pen.png")} style={styles.penIcon} />
@@ -52,7 +52,9 @@ export default function Setting() {
             <Image source={require("./assets/icons/chevron-right.png")} style={styles.chevronIcon} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity style={styles.menuItem} 
+          onPress={() => navigation.navigate("RoutesHis")} // ✅ เพิ่ม Navigation ไปยัง RoutesHis.tsx
+          >
             <Text style={styles.menuText}>Routes History</Text>
             <Image source={require("./assets/icons/chevron-right.png")} style={styles.chevronIcon} />
           </TouchableOpacity>

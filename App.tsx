@@ -15,6 +15,9 @@ import SettingDark from "./SettingDark";
 import Planned from "./Planned";
 import Page2 from "./page2";
 import plantrip2 from "./plantrip2";
+import EditProfile from "./EditProfile";
+import RoutesHis from "./RoutesHis";
+import RouteDetails from "./RouteDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,7 +49,10 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Page2" component={Page2} />
         <Stack.Screen name="Setting" component={Setting} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="SettingDark" component={SettingDark} />
+        <Stack.Screen name="RoutesHis" component={RoutesHis} />
+        <Stack.Screen name="RouteDetails" component={RouteDetails} />
         <Stack.Screen name="Planned" component={Planned} />
         <Stack.Screen name = "plantrip2" component={plantrip2}/>
       </Stack.Navigator>

@@ -4,4 +4,8 @@ export type RootStackParamList = {
   Planned: undefined;
   SettingDark: undefined;
   LogIn: undefined;
+  EditProfile: undefined;
+  RoutesHis: undefined;
+  RouteDetails: undefined;
+  EditCar: undefined;
 };
