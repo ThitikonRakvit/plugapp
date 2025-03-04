@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Modal,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -17,9 +18,15 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, "Setting">;
 export default function Setting() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute();
+  const [isModalVisible, setModalVisible] = useState(false); // ✅ State ควบคุม Modal
+
+  const handleLogout = () => {
+    setModalVisible(false);
+    navigation.navigate("LogIn");
+  };
 
   return (
-    <SafeAreaView style={styles.safeContainer}> 
+    <SafeAreaView style={styles.safeContainer}>
       <View style={styles.container}>
         {/* Header */}
         <Text style={styles.header}>Setting</Text>
@@ -92,59 +99,118 @@ export default function Setting() {
           </TouchableOpacity>
 
           {/* Logout */}
-          <TouchableOpacity style={{ paddingVertical: 15 }}>
+          <TouchableOpacity style={{ paddingVertical: 15 }} onPress={() => setModalVisible(true)}>
             <Text style={styles.logout}>Logout</Text>
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* ✅ Popup Logout Confirmation */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Logout Confirmation</Text>
+            <Text style={styles.modalMessage}>Are you sure you want to logout?</Text>
+            <View style={styles.modalActions}>
+              <TouchableOpacity onPress={handleLogout}>
+                <Text style={styles.confirmText}>Confirm</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <Text style={styles.cancelText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Bottom Navigation Bar */}
       <View style={styles.bottomNav}>
-        {/* Find EV Station Button */}
-  <TouchableOpacity
-    style={[styles.navItem, { opacity: route.name === "Home" ? 1 : 0.5 }]} // ใช้ opacity กับ TouchableOpacity
-    onPress={() => navigation.navigate("Home")}
-  >
-    <Image
-      source={require("./assets/icons/Marker.png")}
-      style={[styles.icon, { tintColor: "white" }]} // ไอคอนเป็นสีขาวเสมอ
-    />
-    <Text style={[styles.navText, { color: "white" }]}>
-      Find EV station
-    </Text>
-  </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.navItem, { opacity: route.name === "Home" ? 1 : 0.5 }]}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Image
+            source={require("./assets/icons/Marker.png")}
+            style={[styles.icon, { tintColor: "white" }]}
+          />
+          <Text style={[styles.navText, { color: "white" }]}>Find EV station</Text>
+        </TouchableOpacity>
 
-      {/* Plan Trip Button */}
-      <TouchableOpacity
-        style={[styles.navItem, { opacity: route.name === "Planned" ? 1 : 0.5 }]}
-        onPress={() => navigation.navigate("Planned")}
-      >
-        <Image
-          source={require("./assets/icons/Planned.png")}
-          style={[styles.icon, { tintColor: "white" }]}
-        />
-        <Text style={[styles.navText, { color: "white" }]}>
-          Plan trip
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.navItem, { opacity: route.name === "Planned" ? 1 : 0.5 }]}
+          onPress={() => navigation.navigate("Planned")}
+        >
+          <Image
+            source={require("./assets/icons/Planned.png")}
+            style={[styles.icon, { tintColor: "white" }]}
+          />
+          <Text style={[styles.navText, { color: "white" }]}>Plan trip</Text>
+        </TouchableOpacity>
 
-      {/* Settings Button */}
-      <TouchableOpacity
-        style={[styles.navItem, { opacity: route.name === "Setting" ? 1 : 0.5 }]}
-        onPress={() => navigation.navigate("Setting")}
-      >
-        <Image
-          source={require("./assets/icons/Settings.png")}
-          style={[styles.icon, { tintColor: "white" }]}
-        />
-        <Text style={[styles.navText, { color: "white" }]}>
-          Settings
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.navItem, { opacity: route.name === "Setting" ? 1 : 0.5 }]}
+          onPress={() => navigation.navigate("Setting")}
+        >
+          <Image
+            source={require("./assets/icons/Settings.png")}
+            style={[styles.icon, { tintColor: "white" }]}
+          />
+          <Text style={[styles.navText, { color: "white" }]}>Settings</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContainer: {
+    width: 300,
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 15,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#EA4335",
+  },
+  modalMessage: {
+    fontSize: 14,
+    color: "#555",
+    marginVertical: 10,
+  },
+  modalActions: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    marginTop: 10,
+    gap: 80,
+  },
+  confirmText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333",
+    textDecorationLine: "underline",
+  },
+  cancelText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#EA4335",
+    textDecorationLine: "underline",
+  },
   safeContainer: {
     flex: 1,
     backgroundColor: "#F7F8F9",
@@ -243,4 +309,3 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
-

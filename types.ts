@@ -3,4 +3,5 @@ export type RootStackParamList = {
   Setting: undefined;
   Planned: undefined;
   SettingDark: undefined;
+  LogIn: undefined;
 };
