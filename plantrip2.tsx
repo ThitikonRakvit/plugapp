@@ -16,87 +16,104 @@ import { Ionicons } from "@expo/vector-icons";
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 
+
 const StationDropdown = () => {
-    const [expanded, setExpanded] = useState(false);
-  
-    const stations = [
-      {
-        name: 'The Paseo Mall (Lat Krabang) ST.2',
-        location: 'Lat Krabang, Lat Krabang, Bangkok',
-        provider: 'EA Anywhere',
-        providerIcon: require('./assets/ea.png'),
-        distance: '0.24 km',
-      },
-      {
-        name: 'The Paseo Mall (Lat Krabang) ST.1',
-        location: 'Lat Krabang, Lat Krabang, Bangkok',
-        provider: 'EA Anywhere',
-        providerIcon: require('./assets/ea.png'),
-        distance: '0.32 km',
-      },
-      {
-        name: 'GWM Suvarnabhumi Ladkrabang',
-        location: '580, Lat Krabang Road, Lat Krabang Subdistrict, Bangkok, Thailand, 10520',
-        provider: 'GWM',
-        providerIcon: require('./assets/icons/gwm.png'),
-        distance: '0.35 km',
-      },
-    ];
-  
-    return (
-      <View style={{ backgroundColor: '#313F7E', borderRadius: 20, padding: 15, margin: 20,marginTop:20}}>
-        <View style={{ alignItems: 'flex-end', marginTop: -1,left:-6 }}>
-        <Text style={{ color: 'lightgray', fontSize: 13, fontWeight: 600 }}>Recommend</Text>
-        </View>
-        <View style={{ marginTop: 7,left:14 }}>
-          <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>{stations[0].name}</Text>
-          <View style={{marginTop:6}}>
-          <Text style={{ color: 'lightgray', fontSize: 14 }}>{stations[0].location}</Text>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
-            <Image source={stations[0].providerIcon} style={{ width: 24, height: 24, marginRight: 5 }} />
-            <Text style={{ color: 'white', fontSize: 14 }}>{stations[0].provider}</Text>
-            <Image source={require('./assets/icons/distance.png')} style={{ width: 20, height: 20, marginLeft: 20}} />
-            <Text style={{ color: 'white', fontSize: 14 }}> Distance: {stations[0].distance}</Text>
-          </View>
-        </View>
-  
-        {expanded && (
-          <View style={{ marginTop: 5 }}>
-            {stations.slice(1).map((station, index) => (
-              <View key={index} style={{ marginTop: 10, borderTopWidth: 1, borderTopColor: 'lightgray', paddingTop: 10 }}>
-                <View style={{left:14,marginTop:5}}>
-                
-                <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>{station.name}</Text>
-                <View style={{marginTop:5}}>
-                <Text style={{ color: 'lightgray', fontSize: 14 }}>{station.location}</Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8}}>
-                  <Image source={station.providerIcon} style={{ width: 24, height: 24 }} />
-                  <View style={{left:5}}>
-                  <Text style={{ color: 'white', fontSize: 14 }}>{station.provider}</Text>
-                  </View>
-                  <View style={{left:25}}>
-                  <Image source={require('./assets/icons/distance.png')} style={{ width: 20, height: 20 }} />
-                  </View>
-                  <View style={{left:25}}>
-                  <Text style={{ color: 'white', fontSize: 14 }}> Distance: {station.distance}</Text>
-                </View>
-                </View>
-                </View>
-              </View>
-            ))}
-          </View>
-        )}
-  
-        <TouchableOpacity onPress={() => setExpanded(!expanded)} style={{ marginTop: 10 }}>
-          <Text style={{ color: 'white', fontSize: 14, textAlign: 'center', textDecorationLine: 'underline' }}>
-            {expanded ? 'Hide ▲' : 'Show all stations ▼'}
+  const navigation = useNavigation();  // ✅ Move useNavigation inside the component
+  const [expanded, setExpanded] = useState(false);
+
+  const stations = [
+    {
+      name: 'The Paseo Mall (Lat Krabang) ST.2',
+      location: 'Lat Krabang, Lat Krabang, Bangkok',
+      provider: 'EA Anywhere',
+      providerIcon: require('./assets/ea.png'),
+      distance: '0.24 km',
+    },
+    {
+      name: 'The Paseo Mall (Lat Krabang) ST.1',
+      location: 'Lat Krabang, Lat Krabang, Bangkok',
+      provider: 'EA Anywhere',
+      providerIcon: require('./assets/ea.png'),
+      distance: '0.32 km',
+    },
+    {
+      name: 'GWM Suvarnabhumi Ladkrabang',
+      location: '580, Lat Krabang Road, Lat Krabang Subdistrict, Bangkok, Thailand, 10520',
+      provider: 'GWM',
+      providerIcon: require('./assets/icons/gwm.png'),
+      distance: '0.35 km',
+    },
+  ];
+
+  return (
+    <View style={{ backgroundColor: '#313F7E', borderRadius: 20, padding: 15, margin: 20, marginTop: 20 }}>
+      <View style={{ alignItems: 'flex-end', marginTop: -1, left: -6 }}>
+        <Text style={{ color: 'lightgray', fontSize: 13, fontWeight: '600' }}>Recommend</Text>
+      </View>
+      
+      {/* Clickable station name for navigation */}
+      <View style={{ marginTop: 7, left: 14 }}>
+        <TouchableOpacity onPress={() => navigation.navigate("plantrip3")}>  
+          <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+            {stations[0].name}
           </Text>
         </TouchableOpacity>
       </View>
-    );
-  };
+
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
+        <Image source={stations[0].providerIcon} style={{ width: 24, height: 24, marginRight: 5 }} />
+        <Text style={{ color: 'white', fontSize: 14 }}>{stations[0].provider}</Text>
+        <Image source={require('./assets/icons/distance.png')} style={{ width: 20, height: 20, marginLeft: 20 }} />
+        <Text style={{ color: 'white', fontSize: 14 }}> Distance: {stations[0].distance}</Text>
+      </View>
+
+      {expanded && (
+        <View style={{ marginTop: 5 }}>
+          {stations.slice(1).map((station, index) => (
+            <View 
+              key={index} 
+              style={{ marginTop: 10, borderTopWidth: 1, borderTopColor: 'lightgray', paddingTop: 10 }}
+            >
+              <View style={{ left: 14, marginTop: 5 }}>
+                {/* Clickable station names for navigation */}
+                <TouchableOpacity onPress={() => navigation.navigate("plantrip3")}>
+                  <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+                    {station.name}
+                  </Text>
+                </TouchableOpacity>
+
+                <View style={{ marginTop: 5 }}>
+                  <Text style={{ color: 'lightgray', fontSize: 14 }}>{station.location}</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
+                  <Image source={station.providerIcon} style={{ width: 24, height: 24 }} />
+                  <View style={{ left: 5 }}>
+                    <Text style={{ color: 'white', fontSize: 14 }}>{station.provider}</Text>
+                  </View>
+                  <View style={{ left: 25 }}>
+                    <Image source={require('./assets/icons/distance.png')} style={{ width: 20, height: 20 }} />
+                  </View>
+                  <View style={{ left: 25 }}>
+                    <Text style={{ color: 'white', fontSize: 14 }}> Distance: {station.distance}</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          ))}
+        </View>
+      )}
+
+      {/* Expand / Collapse button */}
+      <TouchableOpacity onPress={() => setExpanded(!expanded)} style={{ marginTop: 10 }}>
+        <Text style={{ color: 'white', fontSize: 14, textAlign: 'center', textDecorationLine: 'underline' }}>
+          {expanded ? 'Hide ▲' : 'Show all stations ▼'}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
   
   export default function Page2() {
     const navigation = useNavigation<NavigationProp>();

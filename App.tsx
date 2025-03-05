@@ -16,6 +16,7 @@ import SettingDark from "./SettingDark";
 import Planned from "./Planned";
 import Page2 from "./page2";
 import plantrip2 from "./plantrip2";
+import plantrip3 from "./plantrip3";
 import EditProfile from "./EditProfile";
 import RoutesHis from "./RoutesHis";
 import RouteDetails from "./RouteDetails";
@@ -59,6 +60,7 @@ export default function App() {
         <Stack.Screen name="RouteDetails" component={RouteDetails} />
         <Stack.Screen name="Planned" component={Planned} />
         <Stack.Screen name = "plantrip2" component={plantrip2}/>
+        <Stack.Screen name = "plantrip3" component={plantrip3}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
