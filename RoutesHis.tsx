@@ -84,19 +84,19 @@ const styles = StyleSheet.create({
     color: "#BCC2E2",
     fontSize: 14,
     fontWeight: "500",
-    marginBottom: 5,
+    marginBottom: 20,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#FFFFFF",
-    marginBottom: 5,
+    marginBottom: 10,
   },
   location: {
     color: "#BCC2E2",
     fontSize: 14,
     fontWeight: "400",
-    marginBottom: 10,
+    marginBottom: 20,
   },
   footerRow: {
     flexDirection: "row",
