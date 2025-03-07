@@ -19,7 +19,7 @@ import { Linking, Alert } from 'react-native';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 
-export default function page2() {
+export default function plantrip3() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute();
   
@@ -48,6 +48,7 @@ export default function page2() {
       );
     });
   };
+
 
   // hide tab
   useEffect(() => {
@@ -81,26 +82,9 @@ export default function page2() {
         </Marker>
       ))}
     </MapView>
-
+        
     <View style={{ position: 'absolute', top:70, left: 20, right: 20, backgroundColor: '#313F7E', padding: 16, borderRadius: 20, shadowColor: '#000', shadowOpacity: 0.2, shadowRadius: 5 }}>
-      <TouchableOpacity 
-        style={{ 
-          position: 'absolute', 
-          top: 20, 
-          left: 20, 
-          width: 25, 
-          height: 25, 
-          borderWidth: 1.5, 
-          borderColor: 'white', 
-          borderRadius: 20, 
-          alignItems: 'center', 
-          justifyContent: 'center' 
-        }} 
-        onPress={() => navigation.navigate("plantrip2")} // Use goBack instead of navigate
-      >
-        <Text style={{ fontSize: 16, color: 'white' }}>←</Text>
-      </TouchableOpacity>
-
+    
 
         <Text style={{ left: -57,fontSize: 20, fontWeight: 'bold', color: 'white', textAlign: 'center', marginBottom:10 }}
         >The Paseo Mall {"\n"}       (Lat Krabang) St.2</Text>
@@ -135,6 +119,26 @@ export default function page2() {
             <Image source={require('./assets/icons/Maps.png')} style={{ width: 80, height: 80, marginBottom: 5 }} />
             <Text style={{ fontSize: 14, fontWeight: 'bold',color: 'white', textDecorationLine: 'underline' }}>Navigate to station</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity style={{ 
+                position: 'absolute', 
+                top: -334, 
+                left: 7, 
+                width: 25, 
+                height: 25, 
+                borderWidth: 1.5, 
+                borderColor: 'white', 
+                borderRadius: 20, 
+                alignItems: 'center', 
+                justifyContent: 'center' 
+                }}
+                onPress={() => navigation.navigate("plantrip2")}>
+
+                  <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>
+                  ←
+                  </Text>
+    </TouchableOpacity>
+
         </View>
       </View>
 

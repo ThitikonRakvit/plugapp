@@ -115,7 +115,7 @@ const StationDropdown = () => {
 };
 
   
-  export default function Page2() {
+  export default function plantrip2() {
     const navigation = useNavigation<NavigationProp>();
     const route = useRoute();
   
