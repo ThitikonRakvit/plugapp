@@ -7,8 +7,13 @@ import {
   StyleSheet,
   SafeAreaView,
   Modal,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "./types";
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, "EditCar">;
 
 interface Car {
   id: number;
@@ -18,7 +23,7 @@ interface Car {
 }
 
 export default function EditCar() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const [cars, setCars] = useState<Car[]>([
     {
       id: 1,
@@ -54,16 +59,15 @@ export default function EditCar() {
   return (
     <SafeAreaView style={styles.safeContainer}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate("Setting")}>
           <Image source={require("./assets/icons/back.png")} style={styles.backIcon} />
         </TouchableOpacity>
-        <Text style={styles.title}>My Car</Text>
+        <Text style={styles.header}>My Car</Text>
         <TouchableOpacity onPress={toggleEditMode}>
           <Text style={styles.editText}>{isEditMode ? "Done" : "Edit"}</Text>
         </TouchableOpacity>
       </View>
-
       {/* แสดงรายการรถ */}
       {cars.length > 0 ? (
         <View style={styles.card}>
@@ -71,13 +75,15 @@ export default function EditCar() {
             <Text style={styles.carName}>{cars[0].name}</Text>
             <Text style={styles.carModel}>{cars[0].model}</Text>
           </View>
-          <Image source={cars[0].image} style={styles.carImage} />
+        <View style={styles.imageContainer}>
+            <Image source={cars[0].image} style={styles.carImage} />
+        </View>
           {isEditMode && (
             <TouchableOpacity onPress={() => confirmDelete(cars[0])} style={styles.deleteIcon}>
               <Image source={require("./assets/icons/delete.png")} style={styles.icon} />
             </TouchableOpacity>
           )}
-        </View>
+        </View>        
       ) : (
         <View style={styles.emptyCard}>
           <TouchableOpacity onPress={() => navigation.navigate("selectcar2")}>
@@ -85,12 +91,12 @@ export default function EditCar() {
           </TouchableOpacity>
         </View>
       )}
-
       {/* ปุ่มเพิ่มรถ */}
-      <TouchableOpacity onPress={() => navigation.navigate("selectcar2")} style={styles.addButton}>
-        <Image source={require("./assets/icons/plus.png")} style={styles.addIcon} />
-      </TouchableOpacity>
-
+      {cars.length > 0 && (
+            <TouchableOpacity onPress={() => navigation.navigate("selectcar2")} style={styles.addButton}>
+                <Image source={require("./assets/icons/plus.png")} style={styles.addIcon} />
+            </TouchableOpacity>
+        )}
       {/* Popup ยืนยันการลบ */}
       <Modal visible={isDeleteConfirm} transparent animationType="fade">
         <View style={styles.modalBackground}>
@@ -118,43 +124,54 @@ export default function EditCar() {
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
-    backgroundColor: "#F8F8F4",
+    backgroundColor: "white",
     paddingHorizontal: 20,
+    paddingTop: 20,
   },
-  header: {
+  headerContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: 10,
-  },
-  backButton: {
-    padding: 5,
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingTop: Platform.OS === "ios" ? 30 : 20,
+    marginBottom: 20,
   },
   backIcon: {
-    width: 28,
+    width: 31,
     height: 28,
   },
-  title: {
-    fontSize: 22,
+  header: {
+    flex: 1,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#2F3C79",
+    textAlign: "left",
+    marginLeft: 10,
   },
   editText: {
     fontSize: 16,
+    fontWeight: "500",
     color: "#777",
+    paddingHorizontal: 10,
   },
   card: {
     backgroundColor: "#2F3C79",
-    padding: 20,
+    width: 340,
+    height: 151,
     borderRadius: 15,
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "space-between",
+    padding: 15,
     marginTop: 20,
     position: "relative",
+    alignSelf: "center",
   },
   cardDetails: {
-    flex: 1,
+    flex: 1, 
+    marginLeft: 10,
+    paddingTop: 8,
+    alignItems: "flex-start",
   },
   carName: {
     fontSize: 18,
@@ -163,41 +180,60 @@ const styles = StyleSheet.create({
   },
   carModel: {
     fontSize: 14,
+    fontWeight: "500",
     color: "#BCC2E2",
+    marginTop: 10,
   },
   carImage: {
-    width: 110,
-    height: 70,
+    width: 106,
+    height: 100,
     resizeMode: "contain",
+    alignSelf: "flex-end",
+    marginRight: 20,
+  },
+  imageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#fff",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 13,
+    elevation: 5,
+    borderRadius: 10,
+    position: "absolute",
+    right: 20,
+    bottom: 18,
   },
   deleteIcon: {
     position: "absolute",
-    top: 10,
-    right: 10,
+    top: 15,
+    right: 20,
   },
   icon: {
-    width: 22,
-    height: 22,
+    width: 15,
+    height: 15,
   },
   emptyCard: {
     backgroundColor: "#EDEDED",
-    height: 120,
+    width: 340,
+    height: 151,
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
+    marginLeft: 50,
   },
   plusIcon: {
-    width: 35,
-    height: 35,
+    width: 20,
+    height: 20,
   },
   addButton: {
     alignSelf: "center",
-    marginTop: 30,
+    marginTop: 20,
   },
   addIcon: {
-    width: 50,
-    height: 50,
+    width: 20,
+    height: 20,
   },
   modalBackground: {
     flex: 1,
@@ -227,8 +263,9 @@ const styles = StyleSheet.create({
   },
   modalActions: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 100,
     marginTop: 15,
   },
   cancelText: {
