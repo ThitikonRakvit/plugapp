@@ -18,7 +18,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, "Setting">;
 export default function Setting() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute();
-  const [isModalVisible, setModalVisible] = useState(false); // ✅ State ควบคุม Modal
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const handleLogout = () => {
     setModalVisible(false);
@@ -66,13 +66,13 @@ export default function Setting() {
               <TouchableOpacity>
                 <Image
                   source={require("./assets/icons/sun.png")}
-                  style={[styles.icon, { tintColor: "#313F7E" }]}
+                  style={[styles.icondisplay, { tintColor: "#313F7E" }]}
                 />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate("SettingDark")}>
                 <Image
                   source={require("./assets/icons/moon.png")}
-                  style={[styles.icon, { tintColor: "#313F7E" }]}
+                  style={[styles.icondisplay, { tintColor: "#313F7E" }]}
                 />
               </TouchableOpacity>
             </View>
@@ -251,9 +251,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   penIcon: {
-    width: 12,
-    height: 12,
+    width: 10,
+    height: 13,
     tintColor: "#fff",
+    marginTop: 10,
   },
   menuItem: {
     flexDirection: "row",
@@ -277,7 +278,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: 75,
   },
-  icon: {
+  icondisplay: {
     width: 25,
     height: 25,
     resizeMode: "contain",
@@ -309,5 +310,25 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 12,
     marginTop: 4,
+  },
+  rowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginTop: 8,
+  },
+  halfContainer: {
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  icon: {
+    width: 35,
+    height: 35,
+    resizeMode: "contain",
+  },
+  icons: {
+    width: 20,
+    height: 20,
+    resizeMode: "contain",
   },
 });

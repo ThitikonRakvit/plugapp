@@ -68,7 +68,7 @@ export default function EditProfile() {
           />
            <TouchableOpacity>
             <Image
-              source={require("./assets/icons/pen.png")} // ✏️ ไอคอนแก้ไขรหัสผ่าน
+              source={require("./assets/icons/pen.png")}
               style={styles.smallEditIcon}
             />
           </TouchableOpacity>
@@ -196,12 +196,15 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   smallEditIcon: {
-    width: 14,
-    height: 14,
-    tintColor: "#A0A0A0",
+    width: 12,
+    height: 15,
+    tintColor: "#585858",
+    marginRight: 10,
   },
   profileEditIconContainer: {
     position: "absolute",
+    bottom: 25, // จัดให้ติดขอบล่างของรูปโปรไฟล์
+    alignSelf: "center", // ทำให้ไอคอนอยู่ตรงกลางของรูปภาพ
     width: 40,
     height: 40,
     backgroundColor: "rgba(255, 255, 255, 0.7)",

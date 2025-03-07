@@ -82,10 +82,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#2F3C79",
+    marginBottom: 10,
   },
   title: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "700",
     color: "#2F3C79",
     marginVertical: 5,
   },
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#2F3C79",
     marginTop: 5,
+    marginBottom: 10,
   },
   info: {
     fontSize: 14,
