@@ -51,11 +51,11 @@ export default function RoutesHis() {
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
-    backgroundColor: "#F7F8F9",
+    backgroundColor: "white",
   },
   container: {
     flex: 1,
-    backgroundColor: "#F8F8F4",
+    backgroundColor: "white",
     paddingHorizontal: 20,
     paddingTop: 20,
   },
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   moreText: {
     color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "600",
     textDecorationLine: "underline",
   },
 });

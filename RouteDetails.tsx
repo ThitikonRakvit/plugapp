@@ -47,11 +47,11 @@ export default function RouteDetails() {
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
-    backgroundColor: "#F7F8F9",
+    backgroundColor: "white",
   },
   container: {
     flex: 1,
-    backgroundColor: "#F8F8F4",
+    backgroundColor: "white",
     paddingHorizontal: 20,
     paddingTop: 20,
   },
