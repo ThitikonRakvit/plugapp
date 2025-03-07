@@ -251,9 +251,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   penIcon: {
-    width: 12,
-    height: 12,
+    width: 10,
+    height: 13,
     tintColor: "#fff",
+    marginTop: 10,
   },
   menuItem: {
     flexDirection: "row",
