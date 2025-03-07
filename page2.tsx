@@ -12,6 +12,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./types";
 import { useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { Linking,Alert } from "react-native";
 
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -21,7 +22,32 @@ export default function page2() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute();
   
-
+  const openGoogleMaps = () => {
+    const latitude = 13.664902676699251; // Replace with actual latitude
+    const longitude = 100.437658919524; // Replace with actual longitude
+    const url = `comgooglemaps://?daddr=${latitude},${longitude}&directionsmode=driving`;
+  
+    Linking.openURL(url).catch(() => {
+      // If Google Maps app is not installed, open in browser
+      Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`);
+    });
+  };
+  
+  const openEvoltApp = () => {
+    const evoltURL = 'evolt://'; // Replace this if a different deep link is required
+  
+    Linking.openURL(evoltURL).catch(() => {
+      Alert.alert(
+        'Evolt App Not Installed',
+        'It looks like the Evolt Charging app is not installed on your device. Please install it from the App Store.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Go to App Store', onPress: () => Linking.openURL('https://apps.apple.com/th/app/evolt/id1471528625') } // Replace with actual App Store link
+        ]
+      );
+    });
+  };
+  
   // hide tab
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -100,11 +126,11 @@ export default function page2() {
         >AC: xx baht</Text>
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20 }}>
-          <TouchableOpacity style={{ alignItems: 'center' }}>
+          <TouchableOpacity style={{ alignItems: 'center' }}onPress={openEvoltApp}>
             <Image source={require('./assets/icons/Booking.png')} style={{ width: 80, height: 80, marginBottom: 5 }} />
             <Text style={{ fontSize: 14, fontWeight: 'bold',color: 'white', textDecorationLine: 'underline' }}>Booking Charger</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ alignItems: 'center' }}>
+          <TouchableOpacity style={{ alignItems: 'center' }} onPress={openGoogleMaps}>
             <Image source={require('./assets/icons/Maps.png')} style={{ width: 80, height: 80, marginBottom: 5 }} />
             <Text style={{ fontSize: 14, fontWeight: 'bold',color: 'white', textDecorationLine: 'underline' }}>Navigate to station</Text>
           </TouchableOpacity>
