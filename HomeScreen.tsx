@@ -29,6 +29,10 @@ export default function HomeScreen() {
   const [chargingStations, setChargingStations] = useState<any[]>([]);
   const [filteredStations, setFilteredStations] = useState<any[]>([]);
   const [selectedStation, setSelectedStation] = useState<string | null>(null);
+  const [selectedStationCoords, setSelectedStationCoords] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -118,18 +122,32 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        initialRegion={{
-          latitude: 13.736717,
-          longitude: 100.523186,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
-        }}
+        region={
+          selectedStationCoords
+            ? {
+                latitude: selectedStationCoords.latitude,
+                longitude: selectedStationCoords.longitude,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+              }
+            : {
+                latitude: 13.736717, // Default region if no station is selected
+                longitude: 100.523186,
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+              }
+        }
       >
         {locations.map((loc, index) => (
           <Marker key={index} coordinate={loc}>
             <Ionicons name="flash" size={32} color="red" />
           </Marker>
         ))}
+        {selectedStationCoords && (
+          <Marker coordinate={selectedStationCoords}>
+            <Ionicons name="flash" size={32} color="green" />{" "}
+          </Marker>
+        )}
       </MapView>
 
       <View style={styles.searchCard}>
@@ -187,9 +205,11 @@ export default function HomeScreen() {
                 style={styles.suggestionItem}
                 onPress={() => {
                   setFilteredStations([]);
-                  setSearchQuery(() => {
-                    setSelectedStation(station.name);
-                    return station.name;
+                  setSearchQuery(station.name);
+                  setSelectedStation(station.name);
+                  setSelectedStationCoords({
+                    latitude: station.latitude,
+                    longitude: station.longitude,
                   });
                 }}
               >
