@@ -25,6 +25,10 @@ export default function HomeScreen() {
 
   const [cars, setCars] = useState<any[]>([]);
   const [selectedCar, setSelectedCar] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [chargingStations, setChargingStations] = useState<any[]>([]);
+  const [filteredStations, setFilteredStations] = useState<any[]>([]);
+  const [selectedStation, setSelectedStation] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -47,6 +51,55 @@ export default function HomeScreen() {
 
     fetchCars();
   }, []);
+
+  useEffect(() => {
+    const fetchChargingStations = async () => {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/charging-stations?search=${searchQuery}`
+        );
+        const result = await response.json();
+
+        if (response.ok && result.data) {
+          setChargingStations(result.data);
+        } else {
+          console.error("Failed to fetch charging stations:", result);
+          setChargingStations([]);
+        }
+      } catch (error) {
+        console.error("Error fetching charging stations:", error);
+        setChargingStations([]);
+      }
+    };
+
+    if (searchQuery) {
+      fetchChargingStations();
+    } else {
+      setChargingStations([]);
+    }
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (searchQuery) {
+      const filtered = chargingStations.filter((station) =>
+        station.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+      setFilteredStations(filtered);
+
+      const exactMatch = filtered.find(
+        (station) => station.name.toLowerCase() === searchQuery.toLowerCase()
+      );
+      if (exactMatch) {
+        setSelectedStation(exactMatch.name);
+      } else {
+        setSelectedStation(null);
+      }
+    } else {
+      setFilteredStations([]);
+      setSelectedStation(null);
+    }
+  }, [searchQuery, chargingStations]);
 
   // hide tab
   useEffect(() => {
@@ -95,10 +148,59 @@ export default function HomeScreen() {
           Select location
         </Text>
         <View style={styles.inputContainer}>
-          <TextInput style={styles.input} placeholder="ex. Soi Thonglor 20" />
+          <TextInput
+            style={styles.input}
+            placeholder="ex. Soi Thonglor 20"
+            value={searchQuery}
+            onChangeText={(text) => {
+              setSearchQuery(text);
+
+              if (text === "") {
+                setSelectedStation(null);
+              } else {
+                const match = chargingStations.find((station) =>
+                  station.name.toLowerCase().startsWith(text.toLowerCase())
+                );
+                if (match && text.length < match.name.length) {
+                  setSelectedStation(null);
+                }
+              }
+            }}
+            onBlur={() => {
+              const match = chargingStations.find(
+                (station) =>
+                  station.name.toLowerCase() === searchQuery.toLowerCase()
+              );
+              if (match) {
+                setSelectedStation(match.name);
+                setSearchQuery(match.name);
+              }
+            }}
+          />
           <Ionicons name="search" size={20} color="gray" />
         </View>
-
+        {filteredStations.length > 0 && (
+          <View style={styles.suggestionContainer}>
+            {filteredStations.map((station, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.suggestionItem}
+                onPress={() => {
+                  setFilteredStations([]);
+                  setSearchQuery(() => {
+                    setSelectedStation(station.name);
+                    return station.name;
+                  });
+                }}
+              >
+                <Text style={styles.suggestionText}>{station.name}</Text>
+                <Text style={styles.suggestionDescription}>
+                  {station.description}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
         <View style={styles.rowContainer}>
           <View style={[styles.halfContainer, { alignItems: "flex-start" }]}>
             <Text
@@ -299,5 +401,31 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     resizeMode: "contain",
+  },
+  suggestionContainer: {
+    backgroundColor: "white",
+    borderRadius: 8,
+    paddingVertical: 8,
+    width: "95%",
+    alignSelf: "center",
+    marginTop: 5,
+    elevation: 3, // Shadow effect for Android
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  suggestionItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+  },
+  suggestionText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  suggestionDescription: {
+    fontSize: 12,
+    color: "gray",
   },
 });
