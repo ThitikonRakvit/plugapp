@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import API_BASE_URL from "./config";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const signUp: React.FC = () => {
   const navigation = useNavigation();
@@ -31,7 +32,11 @@ const signUp: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        navigation.navigate("otp2");
+        if (data.user?.id) {
+          await AsyncStorage.setItem("userId", String(data.user.id));
+          navigation.navigate("otp2");
+        } else {
+        }
       } else {
       }
     } catch (error) {
