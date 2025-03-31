@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
+import API_BASE_URL from "./config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import MapView, { Marker } from "react-native-maps";
 import { SelectList } from "react-native-dropdown-select-list";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,10 +19,34 @@ import { useRoute } from "@react-navigation/native";
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute();
+
+  const [cars, setCars] = useState<any[]>([]);
+  const [selectedCar, setSelectedCar] = useState("");
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      const userId = await AsyncStorage.getItem("userId");
+      try {
+        const response = await fetch(`${API_BASE_URL}/user-cars/${userId}`);
+        const result = await response.json();
+
+        if (response.ok && result.data && Array.isArray(result.data)) {
+          setCars(result.data);
+        } else {
+          console.error("Failed to fetch cars or invalid data:", result);
+          setCars([]);
+        }
+      } catch (error) {
+        console.error("Error fetching cars:", error);
+        setCars([]);
+      }
+    };
+
+    fetchCars();
+  }, []);
 
   // hide tab
   useEffect(() => {
@@ -54,7 +80,14 @@ export default function HomeScreen() {
       </MapView>
 
       <View style={styles.searchCard}>
-        <Text style={{ marginTop:2,fontSize: 15, fontWeight: '700', color: 'white' }}>
+        <Text
+          style={{
+            marginTop: 2,
+            fontSize: 15,
+            fontWeight: "700",
+            color: "white",
+          }}
+        >
           <Image
             source={require("./assets/icons/Pin.png")}
             style={[styles.icons, { width: 38, height: 24 }]}
@@ -67,23 +100,44 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.rowContainer}>
-          <View style={[styles.halfContainer, { alignItems: 'flex-start' }]}>
-          <Text style={{ marginTop:2,fontSize: 15, fontWeight: '700', color: 'white' }}>Select car</Text>
+          <View style={[styles.halfContainer, { alignItems: "flex-start" }]}>
+            <Text
+              style={{
+                marginTop: 2,
+                fontSize: 15,
+                fontWeight: "700",
+                color: "white",
+              }}
+            >
+              Select car
+            </Text>
             <SelectList
-              setSelected={() => {}}
-              data={[
-                { key: "1", value: "Car 1" },
-                { key: "2", value: "Car 2" },
-                
-              ]}
-              boxStyles={{ backgroundColor: "white", width: '95%', borderRadius: 8,padding: 4 }}
-              dropdownStyles={{ backgroundColor: "white", width: '95%'}}
+              setSelected={setSelectedCar}
+              data={cars.map((car, index) => ({
+                key: (index + 1).toString(),
+                value: car.name,
+              }))}
+              boxStyles={{
+                backgroundColor: "white",
+                width: "95%",
+                borderRadius: 8,
+                padding: 4,
+              }}
+              dropdownStyles={{ backgroundColor: "white", width: "95%" }}
             />
           </View>
 
           <View style={styles.halfContainer}>
-            
-          <Text style={{ marginTop:2,fontSize: 15, fontWeight: '700', color: 'white' }}>Current Battery (%)</Text>
+            <Text
+              style={{
+                marginTop: 2,
+                fontSize: 15,
+                fontWeight: "700",
+                color: "white",
+              }}
+            >
+              Current Battery (%)
+            </Text>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
@@ -94,55 +148,59 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.searchButton} onPress={() => navigation.navigate("Page2")}>
+        <TouchableOpacity
+          style={styles.searchButton}
+          onPress={() => navigation.navigate("Page2")}
+        >
           <Text style={styles.searchButtonText}>Search</Text>
         </TouchableOpacity>
-
       </View>
 
       <View style={styles.bottomNav}>
-  {/* Find EV Station Button */}
-  <TouchableOpacity
-    style={[styles.navItem, { opacity: route.name === "Home" ? 1 : 0.5 }]} // ใช้ opacity กับ TouchableOpacity
-    onPress={() => navigation.navigate("Home")}
-  >
-    <Image
-      source={require("./assets/icons/Marker.png")}
-      style={[styles.icon, { tintColor: "white" }]} // ไอคอนเป็นสีขาวเสมอ
-    />
-    <Text style={[styles.navText, { color: "white" }]}>
-      Find EV station
-    </Text>
-  </TouchableOpacity>
+        {/* Find EV Station Button */}
+        <TouchableOpacity
+          style={[styles.navItem, { opacity: route.name === "Home" ? 1 : 0.5 }]} // ใช้ opacity กับ TouchableOpacity
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Image
+            source={require("./assets/icons/Marker.png")}
+            style={[styles.icon, { tintColor: "white" }]} // ไอคอนเป็นสีขาวเสมอ
+          />
+          <Text style={[styles.navText, { color: "white" }]}>
+            Find EV station
+          </Text>
+        </TouchableOpacity>
 
-  {/* Plan Trip Button */}
-  <TouchableOpacity
-    style={[styles.navItem, { opacity: route.name === "Planned" ? 1 : 0.5 }]}
-    onPress={() => navigation.navigate("Planned")}
-  >
-    <Image
-      source={require("./assets/icons/Planned.png")}
-      style={[styles.icon, { tintColor: "white" }]}
-    />
-    <Text style={[styles.navText, { color: "white" }]}>
-      Plan trip
-    </Text>
-  </TouchableOpacity>
+        {/* Plan Trip Button */}
+        <TouchableOpacity
+          style={[
+            styles.navItem,
+            { opacity: route.name === "Planned" ? 1 : 0.5 },
+          ]}
+          onPress={() => navigation.navigate("Planned")}
+        >
+          <Image
+            source={require("./assets/icons/Planned.png")}
+            style={[styles.icon, { tintColor: "white" }]}
+          />
+          <Text style={[styles.navText, { color: "white" }]}>Plan trip</Text>
+        </TouchableOpacity>
 
-  {/* Settings Button */}
-  <TouchableOpacity
-    style={[styles.navItem, { opacity: route.name === "Setting" ? 1 : 0.5 }]}
-    onPress={() => navigation.navigate("Setting")}
-  >
-    <Image
-      source={require("./assets/icons/Settings.png")}
-      style={[styles.icon, { tintColor: "white" }]}
-    />
-    <Text style={[styles.navText, { color: "white" }]}>
-      Settings
-    </Text>
-  </TouchableOpacity>
-</View>
+        {/* Settings Button */}
+        <TouchableOpacity
+          style={[
+            styles.navItem,
+            { opacity: route.name === "Setting" ? 1 : 0.5 },
+          ]}
+          onPress={() => navigation.navigate("Setting")}
+        >
+          <Image
+            source={require("./assets/icons/Settings.png")}
+            style={[styles.icon, { tintColor: "white" }]}
+          />
+          <Text style={[styles.navText, { color: "white" }]}>Settings</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -170,7 +228,6 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.3,
     shadowRadius: 5,
-    
   },
   label: {
     color: "white",
@@ -188,8 +245,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    color: "#333",       // Add padding for better spacing
-
+    color: "#333", // Add padding for better spacing
   },
   searchButton: {
     backgroundColor: "#00FFCC",
