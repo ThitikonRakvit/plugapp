@@ -14,12 +14,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const brands = ["Tesla", "NETA", "ChangAn", "BYD", "Volvo", "ORA"];
 const models: { [key: string]: string[] } = {
-  Tesla: ["Model 3", "Model S", "Model X"],
+  Tesla: ["Model 3", "Model S", "Model X", "Model Y"],
   NETA: ["V", "X", "V-II"],
   ChangAn: ["Deepal", "Lumin"],
-  BYD: ["M6", "Atto3", "Seal", "Dolphin"],
+  BYD: ["M6", "ATTO 3", "Seal", "Dolphin"],
   Volvo: ["EX30", "EC40", "EX40"],
-  ORA: ["Good cat", "07"],
+  ORA: ["Good Cat", "07"],
 };
 
 const selectcar: React.FC = () => {

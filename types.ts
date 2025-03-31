@@ -10,4 +10,9 @@ export type RootStackParamList = {
   EditCar: undefined;
   selectcar: undefined;
   selectcar2: undefined;
+  Page2: {
+    batteryPercentage: string;
+    selectedVehicleId: string;
+    selectedStationId: string;
+  };
 };

@@ -33,6 +33,9 @@ export default function HomeScreen() {
     latitude: number;
     longitude: number;
   } | null>(null);
+  const [batteryPercentage, setBatteryPercentage] = useState("");
+  const [selectedVehicleId, setSelectedVehicleId] = useState("");
+  const [selectedStationId, setSelectedStationId] = useState("");
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -204,13 +207,19 @@ export default function HomeScreen() {
                 key={index}
                 style={styles.suggestionItem}
                 onPress={() => {
+                  // Clear the filtered list and set the search query to the selected station's name
                   setFilteredStations([]);
                   setSearchQuery(station.name);
                   setSelectedStation(station.name);
+
+                  // Set the selected station's coordinates
                   setSelectedStationCoords({
                     latitude: station.latitude,
                     longitude: station.longitude,
                   });
+
+                  // Set the selected station ID
+                  setSelectedStationId(station.id); // Set the ID of the selected station
                 }}
               >
                 <Text style={styles.suggestionText}>{station.name}</Text>
@@ -234,11 +243,21 @@ export default function HomeScreen() {
               Select car
             </Text>
             <SelectList
-              setSelected={setSelectedCar}
               data={cars.map((car, index) => ({
                 key: (index + 1).toString(),
                 value: car.name,
               }))}
+              setSelected={(selectedKey: string) => {
+                const selectedIndex = parseInt(selectedKey, 10) - 1;
+                if (selectedIndex >= 0 && selectedIndex < cars.length) {
+                  const selectedCar = cars[selectedIndex];
+                  console.log("Selected Car:", selectedCar);
+
+                  if (selectedCar) {
+                    setSelectedVehicleId(selectedCar.car.id.toString());
+                  }
+                }
+              }}
               boxStyles={{
                 backgroundColor: "white",
                 width: "95%",
@@ -265,6 +284,8 @@ export default function HomeScreen() {
                 style={styles.input}
                 placeholder="ex. 78"
                 keyboardType="numeric"
+                value={batteryPercentage}
+                onChangeText={(text) => setBatteryPercentage(text)}
               />
             </View>
           </View>
@@ -272,7 +293,13 @@ export default function HomeScreen() {
 
         <TouchableOpacity
           style={styles.searchButton}
-          onPress={() => navigation.navigate("Page2")}
+          onPress={() =>
+            navigation.navigate("Page2", {
+              batteryPercentage,
+              selectedVehicleId,
+              selectedStationId,
+            })
+          }
         >
           <Text style={styles.searchButtonText}>Search</Text>
         </TouchableOpacity>
